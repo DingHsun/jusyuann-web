@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 import uvicorn
+import argparse
 import os
 import logging
 
@@ -15,7 +16,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     logger.info("藏珠軒 server started")
-    logger.info("http://localhost:8000")
     yield
 
 
@@ -37,4 +37,8 @@ async def health():
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--port", type=int, default=8004)
+    args = parser.parse_args()
+    logger.info(f"http://localhost:{args.port}")
+    uvicorn.run("main:app", host="0.0.0.0", port=args.port, reload=True)
