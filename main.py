@@ -25,6 +25,10 @@ static_dir = os.path.join(BASE_DIR, "static")
 if os.path.isdir(static_dir):
     app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
+img_dir = os.path.join(BASE_DIR, "img")
+if os.path.isdir(img_dir):
+    app.mount("/img", StaticFiles(directory=img_dir), name="img")
+
 
 @app.get("/")
 async def root():
